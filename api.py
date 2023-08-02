@@ -5,12 +5,12 @@ from scraper import lambda_handler
 app = Flask(__name__)
 api = Api(app)
 
-class HelloWorld(Resource):
+class ScraperAPI(Resource):
     def post(self):
         data = request.get_json()  # Parse JSON input from the request
         return lambda_handler(data, None)
 
-api.add_resource(HelloWorld, '/')
+api.add_resource(ScraperAPI, '/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
