@@ -1,1 +1,1 @@
-gunicorn api:app --timeout 300
+web: gunicorn api:app
