@@ -8,8 +8,7 @@ api = Api(app)
 class ScraperAPI(Resource):
     def post(self):
         data = request.get_json()  # Parse JSON input from the request
-        # return lambda_handler(data, None)
-        return data
+        return lambda_handler(data, None)
 
 api.add_resource(ScraperAPI, '/')
 
