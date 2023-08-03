@@ -75,7 +75,7 @@ class SCCourtsScraper():
         options.add_argument('--no-sandbox')
         options.add_argument('--single-process')
         options.add_argument('--disable-dev-shm-usage')
-        # options.binary_location = "/app/.apt/usr/bin/chromium-browser"
+        options.binary_location = "/app/.apt/usr/bin/chromium-browser"
 
         # proxy_server_url = self.get_proxy_url()
         # proxy_options = {
@@ -88,7 +88,7 @@ class SCCourtsScraper():
 
         # TODO: where selenium driver is initialized
         self.driver = uc.Chrome(
-            executable_path="/app/.chromedriver/bin/chromedriver",
+            executable_path="/app/.apt/usr/bin/chromedriver",
             options=options,
             # seleniumwire_options=proxy_options
         )
