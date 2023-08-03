@@ -75,6 +75,8 @@ class SCCourtsScraper():
         options.add_argument('--no-sandbox')
         options.add_argument('--single-process')
         options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--remote-debugging-port=9222')  # Connect to remote instance
+
         options.binary_location = "/app/.apt/usr/bin/chromium-browser"
 
         # proxy_server_url = self.get_proxy_url()
