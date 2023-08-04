@@ -313,7 +313,7 @@ def lambda_handler(event, context):
             'body': 'Bad Request',
         }
 
-x = lambda_handler({'queryStringParameters': {
-               'county_name': 'Richland', 'date': '07/28/2023'}}, None)
+# x = lambda_handler({'queryStringParameters': {
+#                'county_name': 'Richland', 'date': '07/28/2023'}}, None)
 
-print(x)
+# print(x)

@@ -19,4 +19,8 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["bash"]
+# Expose the Flask app's port
+EXPOSE 5000
+
+# Run the Gunicorn server
+CMD ["gunicorn", "api:app", "--bind", "0.0.0.0:5000"]

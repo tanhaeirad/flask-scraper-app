@@ -319,5 +319,5 @@ def lambda_handler(event, context):
             'body': 'Bad Request',
         }
 
-lambda_handler({'queryStringParameters': {
-               'county_name': 'Richland', 'date': '07/28/2023'}}, None)
+# lambda_handler({'queryStringParameters': {
+#                'county_name': 'Richland', 'date': '07/28/2023'}}, None)
