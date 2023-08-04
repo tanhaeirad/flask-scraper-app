@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from simple import lambda_handler
+from scraper import lambda_handler
 
 app = Flask(__name__)
 api = Api(app)
