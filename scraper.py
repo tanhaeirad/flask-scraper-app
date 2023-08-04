@@ -75,33 +75,31 @@ class SCCourtsScraper():
         options.add_argument('--no-sandbox')
         options.add_argument('--single-process')
         options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--remote-debugging-port=9222')  # Connect to remote instance
+        options.binary_location = "/usr/bin/google-chrome"
 
-        options.binary_location = "/app/.apt/usr/bin/chromium-browser"
-
-        # proxy_server_url = self.get_proxy_url()
-        # proxy_options = {
-        #     'proxy': {
-        #         'http': proxy_server_url,
-        #         'https': proxy_server_url
-        #     },
-        #     # 'headless': False
-        # }
+        proxy_server_url = self.get_proxy_url()
+        proxy_options = {
+            'proxy': {
+                'http': proxy_server_url,
+                'https': proxy_server_url
+            },
+            # 'headless': False
+        }
 
         # TODO: where selenium driver is initialized
         self.driver = uc.Chrome(
-            executable_path="/app/.apt/usr/bin/chromedriver",
+            executable_path="/usr/bin/chromedriver",
             options=options,
-            # seleniumwire_options=proxy_options
+            seleniumwire_options=proxy_options
         )
         # self.driver.set_window_size(1200, 815)
-        # self.driver.implicitly_wait(10)
-        # self.wait = WebDriverWait(self.driver, 30)
-        # # Get Home Page
-        # self.driver.get("https://www.sccourts.org/")
-        # self.wait.until(
-        #     EC.presence_of_element_located((By.TAG_NAME, "body")))
-        # self.random_wait()
+        self.driver.implicitly_wait(10)
+        self.wait = WebDriverWait(self.driver, 30)
+        # Get Home Page
+        self.driver.get("https://www.sccourts.org/")
+        self.wait.until(
+            EC.presence_of_element_located((By.TAG_NAME, "body")))
+        self.random_wait()
 
     def close_driver(self) -> None:
         self.driver.quit()
@@ -285,42 +283,6 @@ class ImpervaException(Exception):
 
 
 # get_case_numbers_handler
-# def lambda_handler(event, context):
-#     print(event)
-#     if 'queryStringParameters' in event:
-#         query_params = event['queryStringParameters']
-#         county_name = query_params.get('county_name')
-#         date = query_params.get('date')
-
-#         try:
-#             scraper = SCCourtsScraper(county_name, date)
-#             data = scraper.get_all_casenums()
-#             scraper.close_driver()
-#         except Exception as e:
-#             print("An exception occurred: ", str(e))
-#             print(f"{county_name} Failed")
-#             return {
-#                 'statusCode': 500,
-#                 'body': f"Scraper failure, {county_name}",
-#             }
-#         else:
-#             print(f"{county_name} Success")
-#             # print the json response
-#             print(json.dumps({
-#                 'caseNumbers': data
-#             }))
-#             return {
-#                 'statusCode': 200,
-#                 'body': json.dumps({
-#                     'caseNumbers': data
-#                 })
-#             }
-#     else:
-#         return {
-#             'statusCode': 400,
-#             'body': 'Bad Request',
-#         }
-
 def lambda_handler(event, context):
     print(event)
     if 'queryStringParameters' in event:
@@ -330,8 +292,7 @@ def lambda_handler(event, context):
 
         try:
             scraper = SCCourtsScraper(county_name, date)
-            scraper.driver.get("https://www.geeksforgeeks.org/")
-            title = scraper.driver.title
+            data = scraper.get_all_casenums()
             scraper.close_driver()
         except Exception as e:
             print("An exception occurred: ", str(e))
@@ -341,9 +302,16 @@ def lambda_handler(event, context):
                 'body': f"Scraper failure, {county_name}",
             }
         else:
+            print(f"{county_name} Success")
+            # print the json response
+            print(json.dumps({
+                'caseNumbers': data
+            }))
             return {
                 'statusCode': 200,
-                'body': title,
+                'body': json.dumps({
+                    'caseNumbers': data
+                })
             }
     else:
         return {
@@ -351,46 +319,5 @@ def lambda_handler(event, context):
             'body': 'Bad Request',
         }
 
-# get_single_case_data_handler
-# def lambda_handler(event, context):
-#     if 'queryStringParameters' in event:
-#         query_params = event['queryStringParameters']
-#         county_name = query_params.get('case_name')
-#         date = query_params.get('date')
-#         case_number = query_params.get('case_number')
-
-#         try:
-#             scraper = SCCourtsScraper(county_name, date)
-#             case_data = scraper.get_single_case_data(case_number)
-#             scraper.close_driver()
-#         except ImpervaException as e:
-#             print("Flagged by Imperva")
-#             return {
-#                 'statusCode': 500,
-#                 'body': f"Scraper failure, flagged by imperva.",
-#             }
-#         except Exception as e:
-#             print("An exception occurred: ", str(e))
-#             print(f"{case_number} Failed")
-#             return {
-#                 'statusCode': 500,
-#                 'body': f"Scraper failure, {county_name}, {date}",
-#             }
-#         else:
-#             return {
-#                 'statusCode': 200,
-#                 'body': json.dumps({
-#                     'caseNumber': case_data[0],
-#                     'name': case_data[1],
-#                     'address': case_data[2]
-#                 })
-#             }
-#     else:
-#         return {
-#             'statusCode': 400,
-#             'body': 'Bad Request',
-#         }
-# x = lambda_handler({'queryStringParameters': {
-#                'county_name': 'Richland', 'date': '07/28/2023'}}, None)
-# print(x)
-#    TODO: make sure all of them are selecting lis pendens
+lambda_handler({'queryStringParameters': {
+               'county_name': 'Richland', 'date': '07/28/2023'}}, None)

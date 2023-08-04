@@ -1,0 +1,17 @@
+111.0.5563.110
+docker build --platform linux/amd64 -t simple-scraper-img .
+
+docker run -it -d --name sample-scraper-container-1 simple-scraper-img
+docker exec -it sample-scraper-container-1 /bin/bash
+----
+cd /tmp
+apt update
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+apt install -y ./google-chrome-stable_current_amd64.deb
+
+wget https://chromedriver.storage.googleapis.com/111.0.5563.64/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+mv chromedriver /usr/bin/chromedriver
+
+http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_CHROME_VERSION_amd64.deb
