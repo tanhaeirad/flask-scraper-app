@@ -1,0 +1,39 @@
+# Flask Scraper App
+
+This repository contains a Flask app that provides a REST API for a web scraping function.
+
+## Instructions
+
+1. **SSH to Your Server:** Log in to your server using SSH.
+
+2. **Check Docker Installation:**
+   - Verify if Docker is installed by running: `docker --version`.
+   - If Docker is not installed, follow the official Docker installation instructions at: [Docker Official Documentation](https://www.docker.com)
+
+3. **Upload Files:**
+   - Upload the zip file containing your app to your server. The directory you choose is not important.
+
+4. **Change Directory:**
+   - Navigate to the app's directory. For example, if you uploaded files to `/root`, use: `cd /root/flask-scraper-app`
+
+5. **Build Docker Image:**
+   - Build the Docker image using the following command:
+     ```
+     docker build --platform linux/amd64 -t flask-scraper-img .
+     ```
+
+6. **Run Docker Container:**
+   - Run the Docker container using the following command:
+     ```
+     docker run -d -p 5000:5000 flask-scraper-img
+     ```
+
+7. **Access the App:**
+   - Your Flask app is now running.
+   - If your server's IP address is `164.90.152.186`, you can send POST requests to: `http://164.90.152.186:5000`
+
+## API Endpoint
+
+- **POST Request:**
+  - Send POST requests to: `http://server_ip:5000`
+  - Replace `server_ip` with your server's IP address.
