@@ -23,4 +23,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Run the Gunicorn server
-CMD ["gunicorn", "api:app", "--bind", "0.0.0.0:5000", "--timeout", "300"]
+CMD ["gunicorn", "api:app", "--bind", "0.0.0.0:5000", "--timeout", "600"]

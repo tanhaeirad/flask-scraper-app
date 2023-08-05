@@ -1,7 +1,7 @@
 111.0.5563.110
-docker build --platform linux/amd64 -t simple-scraper-img .
+docker build --platform linux/amd64 -t flask-scraper-img .
 
-docker run -it -d --name sample-scraper-container-2 simple-scraper-img
+docker run -d -p 5000:5000 flask-scraper-img
 docker exec -it sample-scraper-container-2 /bin/bash
 ----
 cd /tmp
