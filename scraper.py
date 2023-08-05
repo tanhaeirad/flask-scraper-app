@@ -304,14 +304,10 @@ def lambda_handler(event, context):
         else:
             print(f"{county_name} Success")
             # print the json response
-            print(json.dumps({
-                'caseNumbers': data
-            }))
+            print({'caseNumbers': data})
             return {
                 'statusCode': 200,
-                'body': json.dumps({
-                    'caseNumbers': data
-                })
+                'body': {'caseNumbers': data}
             }
     else:
         return {
